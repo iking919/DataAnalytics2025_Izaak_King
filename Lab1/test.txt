@@ -1,1 +1,0 @@
-This is just a test file to test the creating of the lab1 folder. This will be deleted.
