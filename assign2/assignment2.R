@@ -2,6 +2,7 @@ library(readr)
 library(EnvStats)
 library(nortest)
 library(ggplot2)
+library(class)
 
 # set working directory (relative path)
 setwd("C:/Users/kingi/Documents/github/DataAnalytics2025_Izaak_king/assign2")
@@ -114,5 +115,84 @@ ggplot(lin.mod7, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0) +
   labs(title='Residual vs. Fitted Values Plot', x='Fitted Values', y='Residuals')
+
+
+# now doing k-plots
+
+modelInputs <- scale(epi.data[, c("BDH.new", "AIR.new", "PCC.new")])
+label <- epi.data$region
+
+knnModel0 <- knn(train = modelInputs, test = modelInputs, cl = label, k = 3)
+
+confusionMatrix0 <- table(Predicted = knnModel0, Actual = label)
+print(confusionMatrix0)
+
+# we can sum the diagonal to get correctly predicted regions
+
+correct <- sum(diag(confusionMatrix0)) 
+
+# we can sum all points total for entire amount of regions
+
+total <- length(epi.data$region)
+
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
+# repeat knn model with k = 5
+
+knnModel1 <- knn(train = modelInputs, test = modelInputs, cl = label, k = 5)
+confusionMatrix1 <- table(Predicted = knnModel1, Actual = label)
+print(confusionMatrix1)
+correct <- sum(diag(confusionMatrix1))
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
+# repeat knn model with k = 7
+
+knnModel2 <- knn(train = modelInputs, test = modelInputs, cl = label, k = 7)
+confusionMatrix2 <- table(Predicted = knnModel2, Actual = label)
+print(confusionMatrix2)
+correct <- sum(diag(confusionMatrix2))
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
+
+
+
+# now doing 3 new variables
+
+modelInputs1 <- scale(epi.data[, c("AGR.new", "WRS.new", "H2O.new")])
+knnModel3 <- knn(train = modelInputs1, test = modelInputs1, cl = label, k = 3)
+confusionMatrix3 <- table(Predicted = knnModel3, Actual = label)
+print(confusionMatrix3)
+correct <- sum(diag(confusionMatrix3)) 
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
+
+# repeat knn model with k = 5
+
+knnModel4 <- knn(train = modelInputs1, test = modelInputs1, cl = label, k = 5)
+confusionMatrix4 <- table(Predicted = knnModel4, Actual = label)
+print(confusionMatrix4)
+correct <- sum(diag(confusionMatrix4))
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
+# repeat knn model with k = 7
+
+knnModel5 <- knn(train = modelInputs1, test = modelInputs1, cl = label, k = 7)
+confusionMatrix5 <- table(Predicted = knnModel5, Actual = label)
+print(confusionMatrix5)
+correct <- sum(diag(confusionMatrix5))
+accuracy <- correct / total
+print(paste("Amount Correct:", correct))
+print(paste("Accuracy:", round(accuracy, 3)))
+
 
 
