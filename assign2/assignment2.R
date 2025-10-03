@@ -117,7 +117,7 @@ ggplot(lin.mod7, aes(x = .fitted, y = .resid)) +
   labs(title='Residual vs. Fitted Values Plot', x='Fitted Values', y='Residuals')
 
 
-# now doing k-plots
+# now doing knn-plots
 
 modelInputs <- scale(epi.data[, c("BDH.new", "AIR.new", "PCC.new")])
 label <- epi.data$region
