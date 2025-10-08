@@ -160,8 +160,6 @@ print(paste("Amount Correct:", correct))
 print(paste("Accuracy:", round(accuracy, 3)))
 
 
-
-
 # now doing 3 new variables
 
 modelInputs1 <- scale(epi.data[, c("AGR.new", "WRS.new", "H2O.new")])
